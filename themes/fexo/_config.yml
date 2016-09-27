@@ -20,11 +20,11 @@ home_nav:
     url: /project/
     target_blank: true #在新页面打开
   - name: Github
-    url: https://github.com/forsigner
+    url: https://github.com/runningmaverick
     target_blank: true
-  - name: Twitter
-    url: https://twitter.com/forsigner
-    target_blank: true
+#  - name: Twitter
+#    url: https://twitter.com/forsigner
+#    target_blank: true
 
 # config page nav
 page_nav:
@@ -67,7 +67,7 @@ search_slogan:
 
 link_slogan:
   isShow: true # true|fase
-  text: 交换友链可以邮件 forsigner@gmail.com
+  text: 交换友链可以邮件 zjackytao@gmail.com
 
 
 # set backtop show or hide
@@ -83,7 +83,7 @@ backtop:
 donation:
   show: true
   btn_text: 支持一下
-  tip: 扫一扫，支持forsigner
+  tip: 扫一扫，支持runningmaverick
   items:
     - type: 微信
       text: 微信扫一扫
@@ -143,17 +143,17 @@ about:
   - type: Github
     icon: icon-github
     text_key: Github
-    text_value: "@forsigner"
-    text_value_url: https://github.com/forsigner
+    text_value: "@runningmaverick"
+    text_value_url: https://github.com/runningmaverick
   - type: weibo
     icon: icon-weibo
     text_key: 微博
-    text_value: "@forsigner"
+    text_value: "@runningmaverick"
     text_value_url: http://weibo.com/u/1847075964
   - type: mail
     icon: icon-mail
     text_key: Gmail
-    text_value: "forsigner@gmail.com"
+    text_value: "runningmaverick@gmail.com"
   - type: location
     icon: icon-location
     text_value: 中关村
