@@ -12,3 +12,5 @@ comments: true
 
 ## Tools
 [repl](https://repl.it/)
+[libhunt](https://go.libhunt.com/)
+[aboutme](https://about.me/jackyzhu)
