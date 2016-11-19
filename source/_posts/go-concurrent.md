@@ -30,16 +30,20 @@ goroutines能够多路复用到多个系统线程上，所以即便一个gorouti
 
 在一个函数或方法调用的前面加上一个关键词key，就能创建一个新的goroutine，这次调用将在这个goroutine中运行。当调用结束时，这个goroutine也将退出(悄悄地)。
 
+{% codeblock lang:go %}
     go list.Sort()    // run list.Sort cocurrently; don't wait for it
+{% endcodeblock %}
 
 直接调用literal函数会很方便，因为你很可能在literal函数中引用上下文的其他变量。
 
+{% codeblock lang:go %}
     func Announce(message string, delay time.Duration) {
         go func() {
             time.Sleep(delay)
             fmt.Println(message)
         }()   // Note the parentheses - must call the function
     }
+{% endcodeblock %}
 
 在Golang中，literal函数是闭包，Golang会保证他引用的变量，生存到literal函数结束。
 
@@ -53,14 +57,17 @@ Golang提供channel来实现goroutine之间的通信
 
 Channel是通过make来创建的
 
+{% codeblock lang:go %}
     cj := make(chan int)        // unbuffered channel of integers
     cj := make(chan int, 0)     // unbuffered channel of integers
     cs := make(chan *os.File, 100)      // buffered channel of pointers of Files
+{% endcodeblock %}
 
 Unbuffed channel表示一种同步的通信方式，当channel有人在读的时候，才能往channel里写。写和读时同时发生的。
 
 Channel有很多种常用的用法，如: 等待goroutine结束
 
+{% codeblock lang:go %}
     c := make(chan int)
     go func() {
         doSomething()
@@ -69,11 +76,13 @@ Channel有很多种常用的用法，如: 等待goroutine结束
 
     doSomethingForAWhile()
     <- c // wait for the goroutine to finish; discard the send value
+{% endcodeblock %}
 
 接收者将会阻塞直到有数据到来。如果channel是unbuffered，发送者将会阻塞直到接收者收到数据。如果channel是buffered，发送者将会阻塞直到数据被写入buffer。
 
 Buffered channel可以用做信号量，例如限流
 
+{% codeblock lang:go %}
     sem := make(chan int, MaxOut)
 
     func handle(r *Request) {
@@ -88,10 +97,12 @@ Buffered channel可以用做信号量，例如限流
             go handle(req)
         }
     }
+{% endcodeblock %}
 
 通过 `sem <- 1`实现限流，但上面的代码有小问题，在每拿到一个请求后，都会创建goroutine交给handle，如果request来的太快，会使消耗的资源快速地增长，简单修改
 如下:
 
+{% codeblock lang:go %}
     func Serve(queue chan *Request) {
         for req := range queue {
             sem <- 1
@@ -101,9 +112,11 @@ Buffered channel可以用做信号量，例如限流
             }()
         }
     }
+{% endcodeblock %}
 
 修改如下：
 
+{% codeblock lang:go %}
     func Serve(queue chan *Request) {
         for req := range queue {
             sem <- 1
@@ -113,10 +126,12 @@ Buffered channel可以用做信号量，例如限流
             }(req)
         }
     }
+{% endcodeblock %}
 
 
 在写server时，还有一个常用的限流的方式，以流量上线为数目创建goroutine，都从request的channal中获取请求，代码如下：
 
+{% codeblock lang:go %}
     func handle(queue chan *Request) {
         for req := range queue {
             precess(req)
@@ -130,6 +145,7 @@ Buffered channel可以用做信号量，例如限流
 
         <- quit
     }
+{% endcodeblock %}
 
 没有上面的`<- quit`，上面的Serve会静静地结束，其所起的goroutine也会退出。所以，需要`<- quit`让主goroutine阻塞而不退出，其他goroutine才能正常运行。
 
@@ -137,17 +153,22 @@ Buffered channel可以用做信号量，例如限流
 
 通过`close(ch)`可以关闭一个channel，等待读此channel的地方都能读到数据。但读到的是什么数据呢？我们先回到，从channel中读数据：
 
+{% codeblock lang:go %}
     v := <- ch
+{% endcodeblock %}
 
 实际上是：
 
+{% codeblock lang:go %}
     v, more := <- ch
+{% endcodeblock %}
 
 正常收到数据时，v是收到的channel中的数据，more为true。当ch被关闭后, v则是channel中对应数据的zero value，more为false。
 即，channel被关闭后，任何已经阻塞着读channel和以后试图读channel的都能读到对应数据的zero value!
 
 所以，常用一个单独的channel，对其close来实现类似quit之类的效果，如
 
+{% codeblock lang:go %}
     quit := make(chan int)
 
     go func(){
@@ -157,17 +178,21 @@ Buffered channel可以用做信号量，例如限流
     }()
 
     <- quit
+{% endcodeblock %}
 
 另外，可以通过range来实现，从一个可能被关闭的channel中读出所有正常数据：
 
+{% codeblock lang:go %}
     for v := range queue {
         doSomeStuffWith(v) // queue被关闭后zero vaue不会传给v，且queue被close后，for循环也会正常结束
     }
+{% endcodeblock %}
 
 ## Select
 
 select是golang提供的多路控制机制，
 
+{% codeblock lang:go %}
     select {
     case c <- worker(): // worker() 的evaluate不同于一般语句，worker()调用后回去check下一个case，而不是等到worker()有结果
         ...
@@ -175,6 +200,7 @@ select是golang提供的多路控制机制，
         ...
     ...
     }
+{% endcodeblock %}
 
 实现在多个channel上同时去监听，有一下一些典型应用场景：
 
@@ -188,6 +214,7 @@ select是golang提供的多路控制机制，
 
 多路合并:
 
+{% codeblock lang:go %}
     go func() {
         for {
             select {
@@ -198,9 +225,11 @@ select是golang提供的多路控制机制，
             }
         }
     }()
+{% endcodeblock %}
 
 多路检测:
 
+{% codeblock lang:go %}
     func doWork() {
         c := make(chan SomeStruct)
         go func() {
@@ -214,20 +243,24 @@ select是golang提供的多路控制机制，
 
         return <- c
     }
+{% endcodeblock %}
 
 4个worker做同样的事情，最快有结果的将会被传入channel然后return，其余worker的结果将会被丢弃jjjk
 
 超时机制:
 
+{% codeblock lang:go %}
     select {
     case ...:
     ...
     case <- time.After(time.Second * 30):
         doSomeTimeoutAction()
     }
+{% endcodeblock %}
 
 退出机制:
 
+{% codeblock lang:go %}
     quit := make(chan int)
     ...
     close(quit)  // sometime that we need to quit
@@ -241,4 +274,5 @@ select是golang提供的多路控制机制，
             return
         }
     }()
+{% endcodeblock %}
 
