@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>DeepShare Testing</title>
+  <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="/js/jquery.qrcode.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <style>
+      .entrance-item {
+        margin: 10px auto;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <h1 class="page-header"> ds的测试页面入口 </h1>
+          </div>
+      </div>
+      <div class="row">
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-default">JS SDK DEFAULT</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-callback">JS SDK CALLBACK</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-download-url">JS SDK DOWNLOAD URL</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary"
+                  href="http://deepshare.io/doc/#web-jsapi">JSSDK DOC</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary"
+                  href="deepshare-multiple-instance">multiple instance</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-no-page">no page</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-with-jq">with jquery</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-web-demo">gen url demo</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-web-demo-path">jumei path</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="deepshare-wechat-test">wechat</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="https://fds.so/apple-app-site-association">apple app site association</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a id="gen-qrcode" class="btn btn-primary"
+                  href="javascript:;">生成qrcode</a>
+              <div id="qrcode"></div>
+          </div>
+          <hr>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="weixin://dl/scan">微信扫一扫</a>
+          </div>
+          <div class="entrance-item col-sm-4">
+              <a class="btn btn-primary" href="weixin://dl/scan">微信扫一扫</a>
+          </div>
+      </div>
+  </div>
+  <!--
+  <script src="https://gist.github.com/andforce/36300fa0b7daa938b25e.js"></script>
+  -->
+  <script>
+      $('#gen-qrcode').on('click', function() {
+            $('#qrcode').qrcode('http://deepshare.io'); 
+      });
+  </script>
+</body>
+</html>
