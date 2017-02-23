@@ -11189,7 +11189,7 @@ module.exports = data;
 },{}],6:[function(require,module,exports){
 var techData = [
     {
-        title: 'everydaySites',
+        title: 'everyday sites',
         content: [
         {'href': 'http://news.ycombinator.com', 'name': 'Hacker News', 'category': '技术 & 行业', 'info': '黑客和创业: 请认准，教父的网站'},
         {'href': 'http://hackernewsbooks.com/', 'name': 'Hacker News Book', 'category': '技术 & 行业', 'info': '黑客和创业: 请认准，教父的网站'},
@@ -11216,7 +11216,7 @@ var techData = [
         {'href': 'http://www.botsfloor.com/botstash/', 'name': 'botstash', 'category': '', 'info': ''},
         ],
     }, {
-        title: 'techSites',
+        title: 'tech sites',
         content: [
         {'href': 'http://news.ycombinator.com', 'name': 'Hacker News', 'category': '技术 & 行业', 'info': '黑客和创业: 请认准，教父的网站'},
         {'href': 'http://macro.ycombinator.com/', 'name': 'macro', 'category': '技术 & 行业', 'info': '黑客和创业: 请认准，教父的网站'},

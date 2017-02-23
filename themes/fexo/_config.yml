@@ -19,6 +19,8 @@ home_nav:
   - name: Project
     url: /project/
     target_blank: true #在新页面打开
+  - name: Sites
+    url: /page/sites.html
   - name: Github
     url: https://github.com/runningmaverick
     target_blank: true
